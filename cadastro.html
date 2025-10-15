@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ONG CONECTA: Formulário de Cadastro de Voluntários, Contato e Localização.">
+    <meta name="keywords" content="ONG, doação, voluntariado, educação, segurança alimentar, cadastro, projetos sociais, formulario, cpf">
+    <title>Cadastro, Contato e Doações | ONG CONECTA</title>
+
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@700;900&display=swap" rel="stylesheet">
+    
+    <!-- REGRA CSS TEMPORÁRIA PARA FORÇAR O TAMANHO DA LOGO -->
+    <style>
+        /* Esta regra garante que a logo na header tenha exatamente 260px de largura. */
+        /* Se você quiser manter essa regra, mova-a para o seu arquivo css/styles.css. */
+        header .container a img {
+            width: 260px !important;
+            height: auto !important; /* Mantém a proporção */
+            max-width: none !important; /* Garante que não há limite de max-width */
+        }
+    </style>
+</head>
+<body id="cadastro-page">
+    <header>
+    <div class="container">
+        <!-- Logo Otimizada -->
+        <a href="index.html" accesskey="h" title="Página Inicial">
+            <picture>
+                <source srcset="img/logo.webp" type="image/webp">
+                <!-- Mantendo o atributo width aqui, mas o CSS acima fará a mágica -->
+                <img src="img/logo.png" alt="Logotipo da ONG CONECTA: Mãos unidas" width="260">
+            </picture>
+        </a>
+        
+        <!-- ELEMENTOS DE CONTROLE DO MENU MOBILE -->
+        <!-- Checkbox invisível (controlado pelo CSS) -->
+        <input type="checkbox" id="menu-toggle"> 
+        <!-- Ícone Hamburger visível apenas no mobile -->
+        <label for="menu-toggle" class="hamburger">&#9776;</label> 
+        
+        <!-- NAVEGAÇÃO PRINCIPAL (links corrigidos) -->
+        <nav aria-label="Navegação principal do site">
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="projetos.html">Projetos Sociais</a></li> 
+                <li><a href="cadastro.html">Cadastro e Contato</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+    <main class="container">
+        <!-- Título principal da página -->
+        <h1>Junte-se a Nós! Cadastro, Contato e Doações</h1>
+
+        <figure>
+            <picture>
+                <!-- CAMINHOS DE IMAGEM CORRIGIDOS PARA img/ -->
+                <source srcset="img/compartilhando.webp" type="image/webp">
+                <source srcset="img/compartilhando.jpg" type="image/jpeg">
+                <!-- Usando um placeholder para a imagem do mapa -->
+                <img src="https://placehold.co/400x200/28a745/ffffff?text=CONECTA+Ajudando" alt="Pessoas compartilhando alimentos em uma mesa" width="400" loading="lazy">
+            </picture> 
+        </figure>
+        
+        <!-- SEÇÃO DE CADASTRO (FORMULÁRIO COMPLEXO) -->
+        <section id="formulario-cadastro">
+            <h2>Formulário de Cadastro Completo</h2>
+            
+            <!-- ADICIONADO id="cadastro-form" para o JavaScript -->
+            <form id="cadastro-form" action="#" method="post">
+                
+                <fieldset>
+                    <legend>Informações Pessoais</legend>
+                    
+                    <label for="nome">Nome Completo:</label>
+                    <input type="text" id="nome" name="nome" required placeholder="Seu nome e sobrenome">
+                    
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" name="email" required placeholder="seu.email@exemplo.com">
+                    
+                    <label for="cpf">CPF:</label>
+                    <!-- O JS APLICARÁ A MÁSCARA AQUI. O placeholder deve guiar o usuário. -->
+                    <input type="text" id="cpf" name="cpf" required 
+                            placeholder="999.999.999-99" 
+                            minlength="11" maxlength="14" 
+                            title="Apenas números, o JS adicionará a máscara.">
+                    
+                    <label for="telefone">Telefone:</label>
+                    <!-- O JS APLICARÁ A MÁSCARA AQUI. O placeholder deve guiar o usuário. -->
+                    <input type="tel" id="telefone" name="telefone" required 
+                            placeholder="(99) 99999-9999" 
+                            minlength="10" maxlength="15" 
+                            title="Apenas números, o JS adicionará a máscara.">
+
+                    <label for="nascimento">Data de Nascimento:</label>
+                    <input type="date" id="nascimento" name="nascimento" required>
+                </fieldset>
+                
+                <fieldset>
+                    <legend>Endereço Completo</legend>
+                    
+                    <label for="cep">CEP:</label>
+                    <!-- Validação nativa para 8 dígitos sem máscara, pois o JS fará a máscara. -->
+                    <input type="text" id="cep" name="cep" required placeholder="Ex: 01000-000" 
+                            minlength="8" maxlength="9" 
+                            title="Apenas 8 dígitos, o JS adicionará a máscara.">
+                    
+                    <label for="endereco">Endereço (Rua e Número):</label>
+                    <input type="text" id="endereco" name="endereco" required placeholder="Rua, Número, Bairro e Complemento">
+
+                    <label for="cidade">Cidade:</label>
+                    <input type="text" id="cidade" name="cidade" required placeholder="Sua cidade">
+                    
+                    <label for="estado">Estado:</label>
+                    <select id="estado" name="estado" required>
+                        <option value="">Selecione o Estado</option>
+                        <option value="SP">São Paulo</option>
+                        <option value="RJ">Rio de Janeiro</option>
+                        <option value="MG">Minas Gerais</option>
+                        <option value="BA">Bahia</option>
+                        <option value="PR">Paraná</option>
+                        <!-- Adicione mais estados conforme necessário -->
+                    </select>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Interesse em Voluntariado</legend>
+                    <p>Qual a sua principal área de interesse para voluntariado? (Selecione um ou mais)</p>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="educacao" name="interesse[]" value="educacao">
+                        <label for="educacao">Educação (Aulas de Reforço)</label><br>
+                        
+                        <input type="checkbox" id="logistica" name="interesse[]" value="logistica">
+                        <label for="logistica">Logística e Distribuição</label><br>
+                        
+                        <input type="checkbox" id="geral" name="interesse[]" value="geral">
+                        <label for="geral">Apoio Geral</label>
+                    </div>
+                </fieldset>
+                
+                <!-- Mensagem de Feedback - ESSENCIAL PARA O JS -->
+                <div id="feedback-message" class="alert alert-error hidden" role="alert" style="display: none;"></div>
+
+                <button type="submit" class="btn btn-primary btn-lg">Enviar Cadastro</button>
+                <button type="reset" class="btn btn-secondary btn-lg">Limpar Formulário</button>
+
+            </form>
+        </section>
+
+        <!-- SEÇÃO DE DOAÇÕES -->
+        <section id="doacoes">
+            <h2>Faça a Sua Doação</h2>
+            <p>Sua doação garante a continuidade dos nossos projetos de educação e segurança alimentar.</p>
+            
+            <!-- FORMULÁRIO DE DOAÇÃO SEPARADO -->
+            <fieldset>
+                <legend>Opções de Doação</legend>
+                
+                <form action="/processa-doacao" method="POST">
+                    
+                    <p>
+                        <label for="valor">Valor da Doação (R$):</label>
+                        <input type="number" id="valor" name="valor_doacao" min="10" required placeholder="Mínimo R$10,00">
+                    </p>
+                    
+                    <p>
+                        <label for="email_contato">Seu E-mail (Opcional):</label>
+                        <input type="email" id="email_contato" name="email_contato" placeholder="seu.email@exemplo.com">
+                    </p>
+                    
+                    <p>
+                        <button type="submit" class="btn btn-success">Finalizar Doação com PIX/Cartão</button>
+                    </p>
+                </form>
+            </fieldset>
+        </section>
+        
+        <!-- SEÇÃO DE LOCALIZAÇÃO (IMAGEM E INFORMAÇÕES ORIGINAIS) -->
+        <section id="localizacao">
+            <h2>Nossa Localização</h2>
+            
+            <address>
+                <p><strong>Escritório Administrativo:</strong> Rua da Esperança, 123 - Bairro Solidário, Cidade Alegre.</p>
+                <p><strong>Telefone Principal:</strong> <a href="tel:+551155554444" title="Ligue para a ONG CONECTA">(11) 5555-4444</a></p>
+                <p><strong>Email:</strong> <a href="mailto:contato@ongconecta.org.br" title="Envie um e-mail para a ONG">contato@ongconecta.org.br</a></p>
+                <p><strong>Horário de Atendimento:</strong> Segunda a Sexta, das 9h às 17h.</p>
+            </address>
+
+            <figure>
+                <!-- Usando um placeholder simples para a imagem do mapa -->
+                <img src="https://placehold.co/400x200/007bff/ffffff?text=Mapa+Localizacao" alt="Mapa de localização do nosso escritório na Rua da Esperança" width="400" loading="lazy">
+                
+                <figcaption>Visite-nos para conhecer nosso trabalho!</figcaption>
+            </figure>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 ONG CONECTA. Todos os direitos reservados.</p>
+        <p>Emergência: <a href="tel:+551199999999">Ligue Agora!</a></p>
+    </footer>
+
+    <!-- Vinculação do JavaScript - ESSENCIAL PARA FUNCIONALIDADES DO FORMULÁRIO -->
+    <script src="js/script.js"></script>
+    
+</body>
+</html>

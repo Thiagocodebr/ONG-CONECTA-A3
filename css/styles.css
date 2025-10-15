@@ -1,0 +1,537 @@
+ONG CONECTA-A3/
+├── index.html
+├── projetos.html
+├── cadastro.html
+├── script.js
+├── README.md
+├── img/
+│   └── logo.png
+│   └── logo.webp
+│   └── (outras imagens...)
+└── css/
+└── styles.css
+
+/* ------------------------------------------- */
+/* 0. SETUP INICIAL E IMPORTAÇÃO DE FONTES */
+/* ------------------------------------------- */
+
+/* Importação da família de fontes: Inter (para texto) e Roboto (para títulos) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Roboto:wght@700;900&display=swap');
+
+/* Reset Básico para melhor consistência */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    /* Define o tamanho base para o uso de REM, facilitando o cálculo. 1rem = 10px */
+    font-size: 62.5%;
+    scroll-behavior: smooth; /* Rolagem suave */
+}
+
+/* ------------------------------------------- */
+/* 1. SISTEMA DE DESIGN (VARIÁVEIS CSS) */
+/* ------------------------------------------- */
+:root {
+    /* ==== PALETA DE CORES (8+ cores) ==== */
+    --color-primary-base: #007BFF; /* Azul Institucional */
+    --color-primary-dark: #0056B3; /* Azul Escuro (Hover/Active) */
+    --color-secondary-base: #28A745; /* Verde Esperança (Sucesso/Destaque) */
+    --color-secondary-dark: #1E7E34; /* Verde Escuro */
+    
+    --color-neutral-white: #FFFFFF;
+    --color-neutral-light: #F8F9FA; /* Fundo claro */
+    --color-neutral-gray: #E9ECEF; /* Linhas/Bordas */
+    --color-text-dark: #212529; /* Texto Principal */
+    
+    --color-warning: #FFC107; /* Alerta/Atenção */
+    --color-danger: #DC3545; /* Erro/Perigo */
+
+    /* ==== TIPOGRAFIA HIERÁRQUICA (5+ tamanhos) ==== */
+    --font-family-heading: 'Roboto', sans-serif;
+    --font-family-body: 'Inter', sans-serif;
+    
+    --font-size-h1: 4.8rem; /* 48px */
+    --font-size-h2: 3.2rem; /* 32px */
+    --font-size-h3: 2.4rem; /* 24px */
+    --font-size-body: 1.6rem; /* 16px */
+    --font-size-small: 1.4rem; /* 14px */
+    /* NOVO: Tamanho de fonte para navegação */
+    --font-size-nav: 1.8rem; /* 18px (Maior que o body para destaque) */
+
+    /* ==== SISTEMA DE ESPAÇAMENTO MODULAR (8px, 16px, 24px, 32px, 48px, 64px) ==== */
+    --spacing-xs: 0.8rem;
+    --spacing-sm: 1.6rem;
+    --spacing-md: 2.4rem;
+    --spacing-lg: 3.2rem;
+    --spacing-xl: 4.8rem;
+    --spacing-xxl: 6.4rem;
+
+    /* Propriedades do Design System */
+    --border-radius: 0.6rem;
+    --shadow-default: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+
+/* ------------------------------------------- */
+/* 2. BASE STYLES & TIPOGRAFIA */
+/* ------------------------------------------- */
+
+body 
+{
+    /* CORREÇÃO DO PADDING NO BODY */
+    /* O padding-top deve compensar a altura do header fixo para o conteúdo não ser escondido. 
+       Se a altura total do header é 8rem (incluindo o padding dele), este valor deve ser ajustado. */
+    padding-top: 8rem; 
+    
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body);
+    color: var(--color-text-dark);
+    background-color: var(--color-neutral-light);
+    line-height: 1.6;
+}
+
+/* Removido o padding-top de main. Agora usamos o .header-spacer */
+/* main { 
+     padding-top: 8rem; 
+} */
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-family-heading);
+    color: var(--color-primary-dark);
+    line-height: 1.2;
+    margin-bottom: var(--spacing-sm);
+}
+
+h1 { font-size: var(--font-size-h1); }
+h2 { font-size: var(--font-size-h2); }
+h3 { font-size: var(--font-size-h3); }
+
+p { margin-bottom: var(--spacing-sm); }
+ul, ol { margin-left: var(--spacing-lg); margin-bottom: var(--spacing-sm); }
+
+/* Links de texto padrão */
+a {
+    color: var(--color-primary-base);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+a:hover {
+    color: var(--color-primary-dark);
+    text-decoration: underline;
+}
+
+/* Acessibilidade: Garante um foco visível para navegação por teclado */
+:focus {
+    outline: 0.2rem solid var(--color-secondary-base);
+    outline-offset: 0.2rem;
+    border-radius: var(--border-radius);
+}
+
+/* ------------------------------------------- */
+/* 3. LAYOUT GLOBAL (CSS GRID + GRID CUSTOMIZADO 12 COLUNAS) */
+/* ------------------------------------------- */
+
+/* Container Principal com Largura Máxima */
+.container {
+    width: 90%;
+    max-width: 120rem; /* 1200px */
+    margin-left: auto;
+    margin-right: auto;
+    padding: var(--spacing-sm) 0;
+}
+
+/* Estrutura de Seções (Flexbox para alinhamento vertical e padding) */
+section {
+    
+    padding: var(--spacing-xl) 0;
+    border-bottom: 0.1rem solid var(--color-neutral-gray);
+}
+
+/* Sistema de Grid 12 Colunas (Usado dentro de .container para organização) */
+.grid-12-cols {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--spacing-lg);
+}
+
+/* Classes utilitárias de Colunas (Mobile first: 12 colunas, depois ajusta) */
+.col-12 { grid-column: span 12; }
+
+/* ------------------------------------------- */
+/* 4. HEADER E NAVEGAÇÃO SOFISTICADA */
+/* ------------------------------------------- */
+
+header {
+    background-color: var(--color-neutral-white);
+    box-shadow: var(--shadow-default);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    
+    /* CORREÇÃO DO ESPAÇO: Padding reduzido para um cabeçalho mais compacto */
+    padding: var(--spacing-xs) 0; 
+}
+
+header .container {
+    /* CORREÇÃO DE LAYOUT: Removido display: flex para que Logo e Menu se EMPILHEM (um embaixo do outro) */
+    /* display: flex; */
+    /* justify-content: space-between; */
+    /* align-items: center; */
+    text-align: center; /* Centraliza o Logo e a Navegação no centro */
+    padding: var(--spacing-xs) 5%; /* Ajuste de padding nas laterais */
+}
+
+/* Logo */
+header img {
+    /* Diminuído o tamanho da logo no CSS, mas o style inline no HTML ainda prevalece */
+    height: 4rem; 
+    width: auto;
+}
+
+/* --- NOVO ELEMENTO CRUCIAL: ESPAÇADOR DO HEADER --- */
+/* Empurra o conteúdo principal para baixo, evitando que ele fique escondido. */
+.header-spacer {
+    /* O valor de 8rem (80px) garante que o conteúdo não seja cortado pelo header fixo */
+    height: 8rem; 
+}
+
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    /* CORREÇÃO: Usando display: flex aqui para que os LINKS FIQUEM LADO A LADO */
+    display: flex; 
+    gap: var(--spacing-lg);
+    justify-content: center; /* Centraliza os links dentro do menu */
+}
+
+nav a {
+    color: var(--color-text-dark);
+    font-weight: 600;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius);
+    transition: background-color 0.2s;
+    text-transform: uppercase;
+    
+    /* CORREÇÃO TAMANHO DA LETRA: Usa a nova variável definida no :root */
+    font-size: var(--font-size-nav); 
+}
+
+nav a:hover {
+    background-color: var(--color-neutral-gray);
+    text-decoration: none;
+}
+
+/* Esconde o menu hamburger e o checkbox no desktop */
+.hamburger, #menu-toggle {
+    display: none;
+}
+/* ------------------------------------------- */
+/* 5. FOOTER */
+/* ------------------------------------------- */
+/* ... (Resto do Footer e Componentes) ... */
+/* ------------------------------------------- */
+/* 6. COMPONENTES DE INTERFACE */
+/* ------------------------------------------- */
+
+/* ==== BOTÕES COM ESTADOS VISUAIS ==== */
+.btn {
+    display: inline-block;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius);
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+    text-align: center;
+    font-size: var(--font-size-body);
+}
+
+.btn-primary {
+    background-color: var(--color-primary-base);
+    color: var(--color-neutral-white);
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary-dark);
+    box-shadow: var(--shadow-default);
+}
+
+.btn-secondary {
+    /* MUDANÇA: Usando a cor verde (success) para o botão secundário, como é comum em formulários de doação */
+    background-color: var(--color-secondary-base); 
+    color: var(--color-neutral-white);
+}
+
+.btn-secondary:hover {
+    background-color: var(--color-secondary-dark);
+}
+
+/* Novo botão de sucesso para doação */
+.btn-success {
+    background-color: var(--color-secondary-base);
+    color: var(--color-neutral-white);
+}
+
+.btn-success:hover {
+    background-color: var(--color-secondary-dark);
+}
+
+
+.btn:focus {
+    outline: 0.3rem solid var(--color-warning);
+    outline-offset: 0.3rem;
+}
+
+.btn:disabled {
+    background-color: var(--color-neutral-gray);
+    color: var(--color-text-dark);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* ==== CARDS RESPONSIVOS (PROJETOS) ==== */
+.card-grid {
+    display: flex;
+    flex-wrap: wrap; /* Permite quebrar linha */
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+}
+
+.card {
+    flex: 1 1 calc(33.333% - var(--spacing-lg)); /* 3 cards por linha no desktop */
+    min-width: 30rem; /* Mínimo de 300px para evitar que encolha demais */
+    background-color: var(--color-neutral-white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-default);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-0.5rem);
+}
+
+.card-img img {
+    width: 100%;
+    height: 20rem;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: var(--spacing-md);
+}
+
+.card-content h3 {
+    margin-top: 0;
+    color: var(--color-secondary-base);
+}
+
+/* ==== FORMULÁRIOS ESTILIZADOS E VALIDAÇÃO VISUAL ==== */
+form fieldset {
+    border: 0.1rem solid var(--color-neutral-gray);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    border-radius: var(--border-radius);
+}
+
+form legend {
+    font-size: var(--font-size-h3);
+    color: var(--color-primary-base);
+    font-weight: 700;
+    padding: 0 var(--spacing-xs);
+}
+
+form label {
+    display: block;
+    margin-top: var(--spacing-sm);
+    margin-bottom: var(--spacing-xs);
+    font-weight: 600;
+}
+
+form input:not([type="checkbox"]):not([type="radio"]),
+form select,
+form textarea {
+    width: 100%;
+    padding: var(--spacing-xs);
+    border: 0.1rem solid var(--color-neutral-gray);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-body);
+    transition: border-color 0.2s;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+    border-color: var(--color-primary-base);
+}
+
+/* Validação Visual Nativa (Acessibilidade e Usabilidade) */
+/* Quando o campo é obrigatório e está vazio */
+form input:required:invalid:not(:placeholder-shown),
+form select:required:invalid:not(:focus) {
+    border-color: var(--color-danger);
+    box-shadow: 0 0 0.5rem rgba(220, 53, 69, 0.5); /* Usando RGBA da cor danger */
+}
+
+/* Quando o campo é válido */
+form input:valid:not(:placeholder-shown),
+form select:valid:not(:focus) {
+    border-color: var(--color-secondary-base);
+}
+
+
+/* ==== COMPONENTES DE FEEDBACK (Badges e Alerts) ==== */
+
+/* Badges e Tags */
+.badge {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 1rem;
+    font-size: var(--font-size-small);
+    font-weight: 700;
+    margin-right: var(--spacing-xs);
+}
+
+.badge-educacao {
+    background-color: var(--color-primary-base);
+    color: var(--color-neutral-white);
+}
+
+.badge-alimentar {
+    background-color: var(--color-secondary-base);
+    color: var(--color-neutral-white);
+}
+
+/* Alerts (Mensagens de sucesso/erro do JS) */
+.alert {
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius);
+    margin-bottom: var(--spacing-lg);
+    border: 0.1rem solid transparent;
+}
+.alert-success {
+    background-color: #D4EDDA; /* Light Green */
+    color: #155724; /* Dark Green */
+    border-color: #C3E6CB;
+}
+.alert-error {
+    background-color: #F8D7DA; /* Light Red */
+    color: #721C24; /* Dark Red */
+    border-color: #F5C6CB;
+}
+
+/* ------------------------------------------- */
+/* 7. MEDIA QUERIES (RESPONSIVIDADE - 5+ BREAKPOINTS) */
+/* ------------------------------------------- */
+
+/* Grid 12 Colunas (Desktop) - Reinicia a partir de 1024px */
+@media screen and (min-width: 1024px) {
+    .col-lg-1 { grid-column: span 1; }
+    .col-lg-2 { grid-column: span 2; }
+    .col-lg-3 { grid-column: span 3; }
+    .col-lg-4 { grid-column: span 4; } /* 3 colunas por linha (12/3 = 4) */
+    .col-lg-6 { grid-column: span 6; } /* 2 colunas por linha */
+    .col-lg-8 { grid-column: span 8; }
+    .col-lg-12 { grid-column: span 12; }
+}
+
+
+/* Tablet Horizontal e Telas Grandes (Min-width 768px) */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    /* Layouts: 2 Cards por linha */
+    .card {
+        flex: 1 1 calc(50% - var(--spacing-lg)); /* 2 cards por linha */
+    }
+
+    /* Grid: Divide em 2 */
+    .col-md-6 { grid-column: span 6; }
+    .col-md-12 { grid-column: span 12; }
+}
+
+
+/* Tablet Vertical e Telas Médias (Min-width 600px) */
+@media screen and (min-width: 600px) and (max-width: 767px) {
+    /* Tipografia um pouco menor */
+    h1 { font-size: 3.8rem; }
+    
+    /* Layouts: 1 Card por linha (mais largo) */
+    .card {
+        flex: 1 1 100%; /* 1 card por linha */
+    }
+
+    /* Grid: Divide em 1 (para empilhar) */
+    .col-sm-12 { grid-column: span 12; }
+}
+
+
+/* Mobile (Padrão: Max-width 599px - Mobile First) */
+/* Este breakpoint define o comportamento padrão, sendo mais simples */
+@media screen and (max-width: 599px) {
+    /* Reduz o tamanho de fontes grandes */
+    h1 { font-size: 3.0rem; }
+    h2 { font-size: 2.4rem; }
+    
+    /* Reduz o espaçamento do container */
+    .container {
+        padding: var(--spacing-sm);
+    }
+
+    /* Navegação Mobile (Menu Hamburger) */
+    nav {
+        /* Esconde a navegação principal por padrão no mobile */
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+        width: 100%;
+        position: absolute;
+        top: 8rem; /* POSIÇÃO AJUSTADA PARA FICAR ABAIXO DO HEADER COMPACTO */
+        left: 0;
+        background-color: var(--color-neutral-white);
+        box-shadow: var(--shadow-default);
+    }
+    
+    nav ul {
+        flex-direction: column; /* Links empilhados */
+        gap: 0;
+        padding: var(--spacing-sm) 0;
+    }
+
+    nav li {
+        border-bottom: 0.1rem solid var(--color-neutral-gray);
+    }
+
+    nav a {
+        display: block;
+        padding: var(--spacing-sm) var(--spacing-md);
+        text-align: left;
+    }
+
+    /* Mostra o ícone Hamburger */
+    .hamburger {
+        display: block;
+        cursor: pointer;
+        font-size: 3.0rem;
+        color: var(--color-primary-base);
+        line-height: 1;
+        padding: 0.5rem;
+    }
+    
+    /* Quando o checkbox invisível é marcado, mostra o menu */
+    #menu-toggle:checked ~ nav {
+        max-height: 50rem; /* Um valor alto para garantir que o menu apareça */
+        transition: max-height 0.5s ease-in;
+    }
+
+    /* Esconde elementos grandes (como a imagem do mapa na página de Contato) */
+    #localizacao figure {
+        display: none;
+    }
+}
+/* Fim dos Breakpoints */
