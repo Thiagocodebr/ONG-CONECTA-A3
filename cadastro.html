@@ -191,7 +191,13 @@
 
             <figure>
                 <!-- Usando um placeholder simples para a imagem do mapa -->
-                <img src="https://placehold.co/400x200/007bff/ffffff?text=Mapa+Localizacao" alt="Mapa de localização do nosso escritório na Rua da Esperança" width="400" loading="lazy">
+               <picture>
+                    <!-- CAMINHOS DE IMAGEM CORRIGIDOS PARA img/ -->
+                    <source srcset="img/mapa_local.webp" type="image/webp">
+                    <source srcset="img/mapa_local.jpg" type="image/jpeg">
+                    
+                    <img src="img/mapa_local.png" alt="Mapa de localização do nosso escritório na Rua da Esperança" width="400" loading="lazy">
+                </picture> 
                 
                 <figcaption>Visite-nos para conhecer nosso trabalho!</figcaption>
             </figure>
